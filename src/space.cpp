@@ -31,10 +31,6 @@ int main()
 
     SDL_Event event;
     bool isRunning = true;
-    int frameStart = 0;
-    int frameEnd = 0;
-    int deltaTimeMS = 0;
-    float deltaTimeS = 0.0;
 
     //create initial stars
     vector<shared_ptr<Star>> stars;
@@ -69,10 +65,9 @@ int main()
             }
         }
 
-        for (unsigned i = 0; i < stars.size(); i++)
+        for (auto star: stars)
         {
-            // modify (psuedo replace in place) the star if it is outside the screen space
-            auto star = stars.at(i);
+            // modify in place the star if it is outside the screen space
             if (isOutside(star))
             {
                 star->x = rand() % MAP_W;
@@ -87,9 +82,6 @@ int main()
             star->y = star->y + star->velocity[1];
             star->updateSize();
         }
-
-        frameStart = SDL_GetTicks();
-        deltaTimeS = (float) (deltaTimeMS) / 1000;
 
         //render all the stars
         glClear(GL_COLOR_BUFFER_BIT);
